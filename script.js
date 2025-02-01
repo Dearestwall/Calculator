@@ -1,20 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
     const display = document.getElementById('display');
+    const stepsDisplay = document.getElementById('steps-display');
+    const toggleButton = document.querySelector('.toggle-steps');
 
+    // Clear Display
     function clearDisplay() {
         display.innerText = '0';
-        document.getElementById('steps-display').innerText = '';
-        document.getElementById('steps-display').style.display = 'none';
-        document.querySelector('.toggle-steps').innerText = 'Show Steps';
+        stepsDisplay.innerText = '';
+        stepsDisplay.style.display = 'none';
+        toggleButton.innerText = 'Show Steps';
     }
 
+    // Backspace
     function backspace() {
-        display.innerText = display.innerText.slice(0, -1);
-        if (display.innerText === '') {
-            display.innerText = '0';
-        }
+        display.innerText = display.innerText.slice(0, -1) || '0';
     }
 
+    // Append to Display
     function appendToDisplay(value) {
         if (display.innerText === '0' && !isNaN(value)) {
             display.innerText = value;
@@ -23,11 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Simplify Expression (Handle multiplication and division)
     function simplifyExpression(expression) {
-        // Insert multiplication signs where appropriate (e.g., 2(2) -> 2*(2))
         expression = expression.replace(/(\d)\(/g, '$1*(').replace(/\)(\d)/g, ')*$1');
-
-        // Simplify consecutive signs
         return expression
             .replace(/--/g, '+')
             .replace(/\+\+/g, '+')
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/÷/g, '/');
     }
 
+    // Calculate Result
     function calculateResult() {
-        const stepsDisplay = document.getElementById('steps-display');
         try {
             let expression = display.innerText;
             expression = simplifyExpression(expression);
@@ -47,15 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
             display.innerText = result;
         } catch (e) {
             display.innerText = 'Error';
-            stepsDisplay.innerText = e.message;
+            stepsDisplay.innerText = 'Invalid Expression';
         }
         stepsDisplay.style.display = 'block';
-        document.querySelector('.toggle-steps').innerText = 'Hide Steps';
+        toggleButton.innerText = 'Hide Steps';
     }
 
+    // Toggle Steps
     function toggleSteps() {
-        const stepsDisplay = document.getElementById('steps-display');
-        const toggleButton = document.querySelector('.toggle-steps');
         if (stepsDisplay.style.display === 'none' || stepsDisplay.style.display === '') {
             stepsDisplay.style.display = 'block';
             toggleButton.innerText = 'Hide Steps';
@@ -65,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Handle Keyboard Input
     function handleKeyboardInput(event) {
         const key = event.key;
         if (!isNaN(key) || key === '.') {
@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('keydown', handleKeyboardInput);
 
+    // Expose functions for global use
     window.clearDisplay = clearDisplay;
     window.backspace = backspace;
     window.appendToDisplay = appendToDisplay;
