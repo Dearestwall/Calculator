@@ -2,18 +2,24 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="styles.css">
-<script defer src="script.js"></script>
+    <script defer src="script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Calculator</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="calculator">
+    <!-- Display for Calculation -->
     <div class="display" id="display">0</div>
+    
+    <!-- Display for showing steps -->
     <div class="steps-display" id="steps-display"></div>
+    
+    <!-- Button to toggle steps visibility -->
     <button class="toggle-steps" onclick="toggleSteps()">Show Steps</button>
+    
+    <!-- Calculator buttons -->
     <div class="buttons">
         <button class="clear" onclick="clearDisplay()">C</button>
         <button class="backspace" onclick="backspace()">&#x2190;</button>
@@ -28,7 +34,7 @@
         <button class="number" onclick="appendToDisplay('4')">4</button>
         <button class="number" onclick="appendToDisplay('5')">5</button>
         <button class="number" onclick="appendToDisplay('6')">6</button>
-        <button class="operation" onclick="appendToDisplay('×')">×</button>
+        <button class="operation" onclick="appendToDisplay('×')">X</button>
 
         <button class="number" onclick="appendToDisplay('1')">1</button>
         <button class="number" onclick="appendToDisplay('2')">2</button>
